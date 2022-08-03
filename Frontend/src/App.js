@@ -36,6 +36,12 @@ function App() {
   const [elderlyInterest, setElderlyInterest] = useState("");
   const [elderlyAge, setElderlyAge] = useState("");
 
+  //Activity page
+  const [locationInput, setLocationInput] = useState("");
+  const [dateInput, setDateInput] = useState("");
+  const [timeInput, setTimeInput] = useState("");
+  const [tagsInput, setTagsInput] = useState("");
+  const [languageInput, setLanguageInput] = useState("");
   // refresh pages
   const [refreshState, setRefreshState] = useState(false);
 
@@ -123,6 +129,16 @@ function App() {
         setElderlyInterest,
         elderlyAge,
         setElderlyAge,
+        locationInput,
+        setLocationInput,
+        dateInput,
+        setDateInput,
+        timeInput,
+        setTimeInput,
+        tagsInput,
+        setTagsInput,
+        languageInput,
+        setLanguageInput,
       }}
     >
       <div className="container">

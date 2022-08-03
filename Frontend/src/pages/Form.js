@@ -14,7 +14,6 @@ const Form = () => {
     formdata.append("time", reactCtx.timeInput);
     formdata.append("tags", reactCtx.tagsInput);
     formdata.append("language", reactCtx.languageInput);
-    
 
     const options = {
       method: "PUT",
@@ -49,10 +48,10 @@ const Form = () => {
     if (event.target.id === "location")
       reactCtx.setLocationInput(event.target.value);
     if (event.target.id === "date") reactCtx.setDateInput(event.target.value);
-    if (event.target.id === "time")
-      reactCtx.setTimeInput(event.target.value);
+    if (event.target.id === "time") reactCtx.setTimeInput(event.target.value);
     if (event.target.id === "tags") reactCtx.setTagsInput(event.target.value);
-    if (event.target.id === "language") reactCtx.setLanguageInput(event.target.value);
+    if (event.target.id === "language")
+      reactCtx.setLanguageInput(event.target.value);
   }
 
   function handleSubmit(event) {
@@ -94,7 +93,7 @@ const Form = () => {
                   type="text"
                   onChange={handleChange}
                   placeholder="Activity Name"
-                  id="title"
+                  id="name"
                   value={reactCtx.nameInput}
                   className="mx-auto m-2 w-2/3 block w-100 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 capitalize
               focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:italic"
@@ -105,7 +104,7 @@ const Form = () => {
                   type="text"
                   onChange={handleChange}
                   placeholder="Location of activity"
-                  id="petName"
+                  id="location"
                   value={reactCtx.locationInput}
                   className="mx-auto m-2 w-2/3 block w-50 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 capitalize
               focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:italic"
@@ -116,7 +115,7 @@ const Form = () => {
                   type="text"
                   onChange={handleChange}
                   placeholder="Date of activity"
-                  id="breed"
+                  id="date"
                   value={reactCtx.dateInput}
                   className="mx-auto m-2 w-2/3 block w-50 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 capitalize
               focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:italic"
@@ -127,7 +126,7 @@ const Form = () => {
                   type="text"
                   onChange={handleChange}
                   placeholder="Time of activity"
-                  id="sex"
+                  id="time"
                   value={reactCtx.timeInput}
                   className="mx-auto m-2 w-2/3 block w-50 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 capitalize
               focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:italic"
@@ -138,7 +137,7 @@ const Form = () => {
                   type="text"
                   onChange={handleChange}
                   placeholder="Any tags?"
-                  id="size"
+                  id="tags"
                   value={reactCtx.tagsInput}
                   className="mx-auto m-2 w-2/3 block w-50 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 capitalize
               focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:italic"
@@ -149,7 +148,7 @@ const Form = () => {
                   type="text"
                   onChange={handleChange}
                   placeholder="Language preferred"
-                  id="age"
+                  id="language"
                   value={reactCtx.languageInput}
                   className="mx-auto m-2 w-2/3 block w-50 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 capitalize
               focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:italic"

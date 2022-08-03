@@ -96,50 +96,25 @@ const Home = () => {
               className="ml-4 my-2 mx-3 pl-2 w-64 max-h-96 inline-block m-2 p-2 rounded-lg shadow-lg"
             >
               <div>
-                <img
-                  src={require(`../images/${data.image}`)}
-                  alt="img"
-                  className="mx-auto max-h-48 w-auto"
-                />
                 {/* <img src={require(`../images/charmander.png`)} alt="img" /> */}
               </div>
               <div>
-                <p className="text-xl">{data.title}</p>
+                <p className="text-xl">Activity name: {data.name}</p>
               </div>
               <div>
-                <p className="text-m">Pet Name: {data.petName}</p>
+                <p className="text-m">Location: {data.location}</p>
               </div>
               <div>
-                <p className="text-m">Species: {data.species}</p>
+                <p className="text-m">Date: {data.date}</p>
               </div>
               <div>
-                <p className="text-m">Breed: {data.breed}</p>
+                <p className="text-m">Time: {data.time}</p>
               </div>
               <div>
-                <p className="text-m">
-                  Favourite Count: {data.favouritesCount}
-                </p>
+                <p className="text-m">Language: {data.language}</p>
               </div>
               <div>
-                <button
-                  id={data._id}
-                  onClick={reactCtx.addToFavourites}
-                  className="text-center mx-auto inline-block w-50 px-3 ml-4 text-white font-semibold button-85"
-                >
-                  Favourite
-                </button>
-
-                {reactCtx.userRole == "admin" ? (
-                  <button
-                    id={data._id}
-                    onClick={reactCtx.addToArchives}
-                    className="text-center mx-auto inline-block w-50 px-3 mx-6 text-white font-semibold button-85"
-                  >
-                    Archive
-                  </button>
-                ) : (
-                  <div></div>
-                )}
+                <button>Attend!</button>
               </div>
             </div>
           );
