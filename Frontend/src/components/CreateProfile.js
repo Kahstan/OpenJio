@@ -10,12 +10,11 @@ const CreateProfile = () => {
       email: reactCtx.emailInput,
       password: reactCtx.passwordInput,
       password1: reactCtx.passwordInput,
-      name: reactCtx.nameInput,
-      profileType: reactCtx.profileTypeInput,
-      contact: {
-        address: reactCtx.addressInput,
-        phone: reactCtx.phoneInput,
-      },
+      caregiverName: reactCtx.nameInput,
+      caregiverInterest: reactCtx.caregiverInterest,
+      elderlyLang: reactCtx.elderlyLang,
+      elderlyInterest: reactCtx.elderlyInterest,
+      elderlyAge: reactCtx.elderlyAge,
     });
 
     const options = {
@@ -42,11 +41,13 @@ const CreateProfile = () => {
 
       reactCtx.setEmailInput(data.email);
       reactCtx.setPasswordInput(data.password);
-      reactCtx.setNameInput(data.name);
-      reactCtx.setProfileTypeInput(data.profiletype);
-      reactCtx.setAddressInput(data.contact?.address);
-      reactCtx.setPhoneInput(data.contact?.phone);
-      // alert("profile created");
+      reactCtx.setCaregiverNameInput(data.caregiverName);
+      reactCtx.setCaregiverInterest(data.caregiverInterest);
+      reactCtx.setElderlyLang(data.elderlyLang);
+      reactCtx.setElderlyAge(data.elderlyAge);
+      reactCtx.setUserProfile(data);
+
+      alert("profile created");
     } catch (err) {
       // setError(err.message);
       console.log(err);
@@ -62,11 +63,16 @@ const CreateProfile = () => {
     // if (event.target.id === "password1")
     //   reactCtx.setConfirmPassword(event.target.value);
     if (event.target.id === "name") reactCtx.setNameInput(event.target.value);
-    if (event.target.id === "profiletype")
-      reactCtx.setProfileTypeInput(event.target.value);
-    if (event.target.id === "address")
-      reactCtx.setAddressInput(event.target.value);
-    if (event.target.id === "phone") reactCtx.setPhoneInput(event.target.value);
+    if (event.target.id === "caregiverName")
+      reactCtx.setCaregiverNameInput(event.target.value);
+    if (event.target.id === "caregiverNameInterest")
+      reactCtx.setCaregiverNameInput(event.target.value);
+    if (event.target.id === "elderLang")
+      reactCtx.setElderLangInput(event.target.value);
+    if (event.target.id === "elderlyInterest")
+      reactCtx.setElderInterestInput(event.target.value);
+    if (event.target.id === "elderlyAge")
+      reactCtx.setElderAgeInput(event.target.value);
   }
 
   function handleRegister(event) {
@@ -84,14 +90,14 @@ const CreateProfile = () => {
             placeholder="Required: Your Email Address"
             onChange={handleInput}
             id="email"
-            className="mx-auto m-2 w-1/3 block w-50 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 capitalize
+            className="mx-auto m-2 w-1/3 block w-50 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 
             focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:italic"
           ></input>
         </div>
         <div>
           <input
             type="password"
-            placeholder="Required: Alphanumeric"
+            placeholder="Required: Alphanumeric Password"
             onChange={handleInput}
             id="password"
             className="mx-auto m-2 w-1/3 block w-50 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 capitalize
@@ -103,44 +109,50 @@ const CreateProfile = () => {
             type="text"
             placeholder="Required: Your Name"
             onChange={handleInput}
-            id="name"
+            id="caregiverName"
             className="mx-auto m-2 w-1/3 block w-50 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 capitalize
             focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:italic"
           ></input>
         </div>
         <div>
-          <div>
-            <input
-              type="text"
-              placeholder="Optional: Your Address"
-              onChange={handleInput}
-              id="address"
-              className="mx-auto m-2 w-1/3 block w-50 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 capitalize
-              focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:italic"
-            ></input>
-          </div>
-          <div>
-            <input
-              type="number"
-              placeholder="Optional: Your Phone Number"
-              onChange={handleInput}
-              id="phone"
-              className="mx-auto m-2 w-1/3 block w-50 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 capitalize
-              focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:italic"
-            ></input>
-          </div>
-        </div>
-        <div>
-          <select
-            id="profiletype"
+          <input
+            type="text"
+            placeholder="Required: Your Interest"
             onChange={handleInput}
+            id="caregiverInterest"
             className="mx-auto m-2 w-1/3 block w-50 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 capitalize
             focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:italic"
-          >
-            <option value="">Required: What are you doing here?</option>
-            <option value="adopter">Adopting a pet!</option>
-            <option value="poster">Posting an adoption!</option>
-          </select>
+          ></input>
+        </div>
+        <div>
+          <input
+            type="text"
+            placeholder="Required: Elderly's language"
+            onChange={handleInput}
+            id="elderlyLang"
+            className="mx-auto m-2 w-1/3 block w-50 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 capitalize
+            focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:italic"
+          ></input>
+        </div>
+        <div>
+          <input
+            type="text"
+            placeholder="Required: Elderly's interest"
+            onChange={handleInput}
+            id="elderInterest"
+            className="mx-auto m-2 w-1/3 block w-50 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 capitalize
+            focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:italic"
+          ></input>
+        </div>
+        <div>
+          <input
+            type="text"
+            placeholder="Required: Elderly's Age"
+            onChange={handleInput}
+            id="elderlyAge"
+            className="mx-auto m-2 w-1/3 block w-50 px-3 py-2 bg-white border-1 border-slate-300 rounded-md text-sm shadow-md placeholder-slate-400 capitalize
+            focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:italic"
+          ></input>
         </div>
         <div>
           <button

@@ -34,18 +34,7 @@ const Profile = () => {
       const data = await res.json();
       // setData(data);
       console.log(data);
-      // reactCtx.setUserProfile(data);
-
-      if (reactCtx.userRole == "user") {
-        window.location.reload();
-        // window.location.replace("http://localhost:3000/home");
-      }
-
-      if (reactCtx.userRole == "admin") {
-        reactCtx.refreshState
-          ? reactCtx.setRefreshState(false)
-          : reactCtx.setRefreshState(true);
-      }
+      // reactCtx.setUserProfile(data)
     } catch (err) {
       // setError(err.message);
       console.log(err);
@@ -245,7 +234,7 @@ const Profile = () => {
                 className="ml-4 my-2 mx-3 pl-2 w-1/4 h-1/4 inline-block m-2 p-2 rounded-lg shadow-lg"
               >
                 <div>
-                  <p className="p-1 capitalize">Name: {data.name}</p>
+                  <p className="p-1 capitalize">Name: {data.caregiverName}</p>
                 </div>
                 <div>
                   <p id="email" className="p-1">

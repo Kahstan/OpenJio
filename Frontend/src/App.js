@@ -65,148 +65,11 @@ function App() {
       console.log(data);
       setUserProfile(data);
       console.log(userProfile);
-
-      if (data.length > 1) {
-        setUserRole("admin");
-        console.log(userRole);
-      }
-
-      if (data.length == 1) {
-        setUserRole("user");
-        console.log(userRole);
-      }
     } catch (err) {
       // setError(err.message);
       console.log(err);
     }
   };
-
-  const updateListingFavouriteCount = async (url, listingId) => {
-    const bod = JSON.stringify({ id: listingId });
-
-    const options = {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: "Bearer " + access,
-      },
-      body: bod,
-    };
-
-    try {
-      const res = await fetch(url, options);
-      console.log(res);
-      console.log(options);
-
-      if (res.status !== 200) {
-        throw new Error("Something went wrong.");
-      }
-
-      const data = await res.json();
-      console.log(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const updateProfileFavouritesArray = async (url, listingId) => {
-    const bod = JSON.stringify({ favouriteAdd: listingId });
-
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: "Bearer " + access,
-      },
-      body: bod,
-    };
-
-    try {
-      const res = await fetch(url, options);
-      console.log(res);
-      console.log(options);
-
-      if (res.status !== 200) {
-        throw new Error("Something went wrong.");
-      }
-
-      const data = await res.json();
-      console.log(data);
-      // window.alert("Listing favourited!");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  function addToFavourites(event) {
-    event.preventDefault();
-    console.log(event.target.id);
-
-    // go to listing and plus one to favourite count
-    updateListingFavouriteCount(
-      "http://localhost:5001/listings/favourite",
-      event.target.id
-    );
-
-    // go to profile and add listing ID to profile favourites array
-    updateProfileFavouritesArray(
-      "http://localhost:5001/users/favourites",
-      event.target.id
-    );
-
-    refreshState ? setRefreshState(false) : setRefreshState(true);
-  }
-
-  const updateListingArchive = async (url, listingId, boolean) => {
-    const bod = JSON.stringify({ id: listingId, isArchive: boolean });
-
-    const options = {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: "Bearer " + access,
-      },
-      body: bod,
-    };
-
-    try {
-      const res = await fetch(url, options);
-
-      if (res.status !== 200) {
-        throw new Error("Something went wrong.");
-      }
-
-      const data = await res.json();
-      console.log(data);
-      console.log("Added to archives!");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  function addToArchives(event) {
-    event.preventDefault();
-
-    updateListingArchive(
-      "http://localhost:5001/listings/archive",
-      event.target.id,
-      true
-    );
-
-    refreshState ? setRefreshState(false) : setRefreshState(true);
-  }
-
-  function removeFromArchive(event) {
-    event.preventDefault();
-
-    updateListingArchive(
-      "http://localhost:5001/listings/archive",
-      event.target.id,
-      false
-    );
-
-    refreshState ? setRefreshState(false) : setRefreshState(true);
-  }
 
   return (
     <ReactContext.Provider
@@ -244,12 +107,9 @@ function App() {
         setSearchUserInput,
         validEmail,
         setValidEmail,
-        addToFavourites,
-        addToArchives,
         refreshState,
         setRefreshState,
         fetchDisplay,
-        removeFromArchive,
       }}
     >
       <div className="container">
@@ -257,7 +117,7 @@ function App() {
         <Suspense fallback={<p>loading...</p>}>
           <Switch>
             <Route exact path="/">
-              <Redirect to="/home"></Redirect>
+              <Redirect to="/login"></Redirect>
             </Route>
             <Route exact path="/home">
               <Home />
@@ -265,7 +125,6 @@ function App() {
             <Route path="/Form">
               <Form />
             </Route>
-
             <Route path="/login">
               <Login />
             </Route>
