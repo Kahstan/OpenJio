@@ -149,33 +149,33 @@ router.patch("/edit", auth, async (req, res) => {
   // }
 });
 
-// UPDATE LISTING FAVOURITE COUNT
-router.patch("/favourite", async (req, res) => {
-  // both admin and users can update listing favourite count
-  const newListingData = await Listing.findOneAndUpdate(
-    { _id: req.body.id },
-    { $inc: { favouritesCount: +1 } },
-    { new: true }
-  );
-  res.json(newListingData);
-});
+// // UPDATE LISTING FAVOURITE COUNT
+// router.patch("/favourite", async (req, res) => {
+//   // both admin and users can update listing favourite count
+//   const newListingData = await Listing.findOneAndUpdate(
+//     { _id: req.body.id },
+//     { $inc: { favouritesCount: +1 } },
+//     { new: true }
+//   );
+//   res.json(newListingData);
+// });
 
-// UPDATE LISTING ARCHIVE STATE
-router.patch("/archive", async (req, res) => {
-  const newListingArchive = await Listing.findOneAndUpdate(
-    { _id: req.body.id },
-    { isArchive: req.body.isArchive },
-    { new: true }
-  );
-  res.json(newListingArchive);
-});
+// // UPDATE LISTING ARCHIVE STATE
+// router.patch("/archive", async (req, res) => {
+//   const newListingArchive = await Listing.findOneAndUpdate(
+//     { _id: req.body.id },
+//     { isArchive: req.body.isArchive },
+//     { new: true }
+//   );
+//   res.json(newListingArchive);
+// });
 
 // DELETE LISTING
 router.delete("/delete", auth, async (req, res) => {
-  if (req.decoded.role === "admin") {
+
     const deleteListing = await Listing.deleteOne({ _id: req.body.id });
     res.json(deleteListing);
-  }
+  
 
   if (req.decoded.role === "user") {
     const ownListingData = await Listing.findOne({ _id: req.body.id });
@@ -193,156 +193,29 @@ router.get("/seed", async (req, res) => {
 
   await Listing.create(
     {
-      title: "Pug Pup for adoption",
-      image: "1pug.jpeg",
-      petName: "Bread",
-      species: "dog",
-      breed: "Pug",
-      sex: "Male",
-      size: "Small",
-      age: "2",
-      medical: "Respiratory Distress, Eye Injuries.",
-      ownerContactName: "Lionel Yong",
-      ownerContactEmail: "LiYong@gmail.com",
-      ownerContactPhone: "92705674",
-      ownerContactAddress: "42 everton road",
-      profileContact: {
-        id: "716239123h6712638",
-        name: "Lionel Yong",
-        email: "Liyong@gmail.com",
-      },
-      comments:
-        "I had five procedures to get me healthy: Neuter, skin tuck, soft palate surgery, stenotic nares surgery and a dental cleaning. I have a UTI which is being treated and I will be retested soon to make sure it is all gone. Between the neuter and UTI, I have to wear a belly band at all times. Hopefully, with your love and help, I can learn to potty outside all the time and not wear a belly band. I think it will take me some time to learn outside potty, please be patient with me. I want to please you!",
+      name: "Mahjong",
+      location: "Blk 321 Bedok South Rd",
+      date: "9 Aug 2022",
+      time: "3pm to 5pm",
+      tags: "mahjong",
+      language: "Cantonese"
     },
     {
-      title: "Big Golden Boy (TWINS)",
-      image: "1gr.jpeg",
-      petName: "Furry",
-      species: "dog",
-      breed: "Golden Retriever",
-      sex: "Female",
-      size: "Large",
-      age: "1",
-      medical: "Allergic to sun",
-      ownerContactName: "Nat Yong",
-      ownerContactEmail: "NatYong@gmail.com",
-      ownerContactPhone: "92705624",
-      ownerContactAddress: "18 Marina Boulevard",
-      profileContact: {
-        id: "716239asdad123h6712638",
-        name: "Natalie Yong",
-        email: "Natyong@gmail.com",
-      },
-      comments: "N.A.",
+      name: "Karaoke",
+      location: "Blk 123 New Upper Changi Rd",
+      date: "10 Aug 2022",
+      time: "2pm to 5pm",
+      tags: "karaoke",
+      language: "Mandarin"
     },
     {
-      title: "Big Golden Boy (TWINS)",
-      image: "2gr.jpeg",
-      petName: "Wuzzy",
-      species: "dog",
-      breed: "Golden Retriever",
-      sex: "Male",
-      size: "Large",
-      age: "1",
-      medical: "Allergic to Moon",
-      ownerContactName: "Natalia Yong",
-      ownerContactEmail: "NatYong1@gmail.com",
-      ownerContactPhone: "92705624",
-      ownerContactAddress: "18 Marina Boulevard",
-      profileContact: {
-        id: "716239a213123sdad123h6712638",
-        name: "Natalia Yong",
-        email: "Natyong1@gmail.com",
-      },
-      comments: "N.A.",
+      name: "Card games",
+      location: "Blk 993 Sengkang East Rd",
+      date: "11 Aug 2022",
+      time: "3pm to 6pm",
+      tags: "card_games",
+      language: "English"
     },
-    {
-      title: "Ginger Mane",
-      image: "1cat.jpeg",
-      petName: "Ging",
-      species: "cat",
-      breed: "Red Ginger Cat",
-      sex: "Male",
-      size: "M",
-      age: "3",
-      medical: "Sleeps too much",
-      ownerContactName: "Benzema Yong",
-      ownerContactEmail: "Ben@gmail.com",
-      ownerContactPhone: "92705224",
-      ownerContactAddress: "12 Marina Boulevard",
-      profileContact: {
-        id: "716239a2213113123sdad123h6712638",
-        name: "Benzema Yong",
-        email: "Ben@gmail.com",
-      },
-      comments:
-        "Healthy, immigrating and have to pass him on to a better owner.",
-    },
-    {
-      title: "Wild Red Ginger Kitty",
-      image: "2cat.jpeg",
-      petName: "Saber",
-      species: "cat",
-      breed: "Red Ginger Cat",
-      sex: "Female",
-      size: "L",
-      age: "6",
-      medical: "Only have back legs",
-      ownerContactName: "Benjamin Yong",
-      ownerContactEmail: "Benja@gmail.com",
-      ownerContactPhone: "92725224",
-      ownerContactAddress: "17 Marina Boulevard",
-      profileContact: {
-        id: "716239a2213113123sdad123h6712638",
-        name: "Benja Yong",
-        email: "Benja@gmail.com",
-      },
-      comments: "Loves to scratch, furniture and humans alike",
-    },
-    {
-      title: "10y.o. Bengal",
-      image: "3cat.jpeg",
-      petName: "Bengaleh",
-      species: "cat",
-      breed: "Bengal",
-      sex: "Female",
-      size: "S",
-      age: "10",
-      medical: "Only have front legs",
-      ownerContactName: "BenjaminButton Yong",
-      ownerContactEmail: "BenjaButton@gmail.com",
-      ownerContactPhone: "92723224",
-      ownerContactAddress: "99 Marina Boulevard",
-      profileContact: {
-        id: "716239a2213113123sdad123h6712638",
-        name: "Benjamin Yong",
-        email: "BenjaButton@gmail.com",
-      },
-      comments:
-        "The perfect escape artist, never fails to escape from the house",
-    },
-    {
-      title: "8y.o. bunny",
-      image: "1bun.jpeg",
-      petName: "Bobo",
-      species: "others",
-      breed: "Netherlands Dwarf/Lion Mane",
-      sex: "Male",
-      size: "S",
-      age: "8",
-      medical: "Too cute",
-      ownerContactName: "Nat",
-      ownerContactEmail: "Nat@gmail.com",
-      ownerContactPhone: "93888077",
-      ownerContactAddress: "910 Marina Boulevard",
-      profileContact: {
-        id: "716239a2213113123adfsdad123h6712638",
-        name: "Nat Tan ",
-        email: "Nat@gmail.com",
-      },
-      comments: "Idle champion, doesn't do shit at home. But cute",
-    },
-
     (err, data) => {
       if (err) {
         console.log("GET /seed error:" + err.message);
