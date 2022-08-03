@@ -1,20 +1,14 @@
 import React, { Suspense, useState } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import NavBar from "./components/NavBar";
-import NavBar2 from "./components/NavBar2";
 import ReactContext from "./context/react-context";
 
 import Profile from "./pages/Profile";
-import Favourite from "./pages/Favourite";
 
 const Home = React.lazy(() => import("./pages/Home"));
 // const Favourite = React.lazy(() => import("./pages/Favourite"));
 const Login = React.lazy(() => import("./pages/Login"));
-const Archive = React.lazy(() => import("./pages/Archive"));
 const Form = React.lazy(() => import("./pages/Form"));
-const Dogs = React.lazy(() => import("./pages/Dogs"));
-const Cats = React.lazy(() => import("./pages/Cats"));
-const SmallAnimals = React.lazy(() => import("./pages/SmallAnimals"));
 const CreateProfile = React.lazy(() => import("./components/CreateProfile"));
 // const Profile = React.lazy(() => import("./pages/Profile"));
 
@@ -26,10 +20,6 @@ function App() {
   const [profileTypeInput, setProfileTypeInput] = useState("");
   const [addressInput, setAddressInput] = useState("");
   const [phoneInput, setPhoneInput] = useState("");
-
-  //filter dogs
-  const [dogListing, setDogListing] = useState("");
-  const [catListing, setCatListing] = useState("");
 
   //search bar
   const [searchListingInput, setSearchListingInput] = useState("");
@@ -51,22 +41,6 @@ function App() {
   const [displayAll, setDisplayAll] = useState("");
   const [searchUserInput, setSearchUserInput] = useState("");
   const [validEmail, setValidEmail] = useState(false);
-
-  //listing
-  const [listing, setListing] = useState("");
-  const [titleInput, setTitleInput] = useState("");
-  const [petNameInput, setPetNameInput] = useState("");
-  const [speciesInput, setSpeciesInput] = useState("");
-  const [breedInput, setBreedInput] = useState("");
-  const [sexInput, setSexInput] = useState("");
-  const [sizeInput, setSizeInput] = useState("");
-  const [ageInput, setAgeInput] = useState("");
-  const [medicalInput, setMedicalInput] = useState("");
-  const [commentsInput, setCommentsInput] = useState("");
-  const [ownerNameInput, setOwnerNameInput] = useState("");
-  const [ownerEmailInput, setOwnerEmailInput] = useState("");
-  const [ownerPhoneInput, setOwnerPhoneInput] = useState("");
-  const [ownerAddressInput, setOwnerAddressInput] = useState("");
 
   const fetchDisplay = async (url) => {
     const options = {
@@ -248,10 +222,6 @@ function App() {
         setUserProfile,
         searchListingInput,
         setSearchListingInput,
-        catListing,
-        setCatListing,
-        dogListing,
-        setDogListing,
         phoneInput,
         setPhoneInput,
         addressInput,
@@ -274,34 +244,6 @@ function App() {
         setSearchUserInput,
         validEmail,
         setValidEmail,
-        listing,
-        setListing,
-        titleInput,
-        setTitleInput,
-        petNameInput,
-        setPetNameInput,
-        speciesInput,
-        setSpeciesInput,
-        breedInput,
-        setBreedInput,
-        sexInput,
-        setSexInput,
-        sizeInput,
-        setSizeInput,
-        ageInput,
-        setAgeInput,
-        medicalInput,
-        setMedicalInput,
-        commentsInput,
-        setCommentsInput,
-        ownerNameInput,
-        setOwnerNameInput,
-        ownerEmailInput,
-        setOwnerEmailInput,
-        ownerPhoneInput,
-        setOwnerPhoneInput,
-        ownerAddressInput,
-        setOwnerAddressInput,
         addToFavourites,
         addToArchives,
         refreshState,
@@ -312,7 +254,6 @@ function App() {
     >
       <div className="container">
         <NavBar />
-        <NavBar2 />
         <Suspense fallback={<p>loading...</p>}>
           <Switch>
             <Route exact path="/">
@@ -324,12 +265,7 @@ function App() {
             <Route path="/Form">
               <Form />
             </Route>
-            <Route path="/Archive">
-              <Archive />
-            </Route>
-            <Route path="/favourite">
-              <Favourite />
-            </Route>
+
             <Route path="/login">
               <Login />
             </Route>
@@ -338,15 +274,6 @@ function App() {
             </Route>
             <Route path="/register">
               <CreateProfile />
-            </Route>
-            <Route path="/dogs">
-              <Dogs />
-            </Route>
-            <Route path="/cats">
-              <Cats />
-            </Route>
-            <Route path="/smallanimals">
-              <SmallAnimals />
             </Route>
           </Switch>
         </Suspense>
