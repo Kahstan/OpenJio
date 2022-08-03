@@ -98,12 +98,12 @@ router.patch("/edit", auth, async (req, res) => {
     { _id: req.body.id },
     {
       $set: {
-      name: req.body.name || anyListingData.name,
-      location: req.body.location || anyListingData.location,
-      date: req.body.date || anyListingData.date,
-      time: req.body.time || anyListingData.time,
-      tags: req.body.tags || anyListingData.tags,
-      language: req.body.language || anyListingData.language,
+        name: req.body.name || anyListingData.name,
+        location: req.body.location || anyListingData.location,
+        date: req.body.date || anyListingData.date,
+        time: req.body.time || anyListingData.time,
+        tags: req.body.tags || anyListingData.tags,
+        language: req.body.language || anyListingData.language,
       },
     },
     { new: true }
@@ -172,10 +172,8 @@ router.patch("/edit", auth, async (req, res) => {
 
 // DELETE LISTING
 router.delete("/delete", auth, async (req, res) => {
-
-    const deleteListing = await Listing.deleteOne({ _id: req.body.id });
-    res.json(deleteListing);
-  
+  const deleteListing = await Listing.deleteOne({ _id: req.body.id });
+  res.json(deleteListing);
 
   if (req.decoded.role === "user") {
     const ownListingData = await Listing.findOne({ _id: req.body.id });
@@ -198,7 +196,7 @@ router.get("/seed", async (req, res) => {
       date: "9 Aug 2022",
       time: "3pm to 5pm",
       tags: "mahjong",
-      language: "Cantonese"
+      language: "Cantonese",
     },
     {
       name: "Karaoke",
@@ -206,7 +204,7 @@ router.get("/seed", async (req, res) => {
       date: "10 Aug 2022",
       time: "2pm to 5pm",
       tags: "karaoke",
-      language: "Mandarin"
+      language: "Mandarin",
     },
     {
       name: "Card games",
@@ -214,7 +212,7 @@ router.get("/seed", async (req, res) => {
       date: "11 Aug 2022",
       time: "3pm to 6pm",
       tags: "card_games",
-      language: "English"
+      language: "English",
     },
     (err, data) => {
       if (err) {

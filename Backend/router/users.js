@@ -135,15 +135,8 @@ router.put("/register", async (req, res) => {
 });
 
 router.get("/users", auth, async (req, res) => {
-  if (req.decoded.role === "admin") {
-    const users = await User.find(); // can add .select("email") to filter results
-    res.json(users);
-  }
-
-  if (req.decoded.role === "user") {
-    const user = await User.find({ email: req.decoded.email });
-    res.json(user);
-  }
+  const user = await User.find({ email: req.decoded.email });
+  res.json(user);
 });
 
 router.post("/user", auth, async (req, res) => {

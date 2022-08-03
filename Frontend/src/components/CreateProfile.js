@@ -46,8 +46,6 @@ const CreateProfile = () => {
       reactCtx.setElderlyLang(data.elderlyLang);
       reactCtx.setElderlyAge(data.elderlyAge);
       reactCtx.setElderlyInterest(data.elderlyInterest);
-
-      alert("profile created");
     } catch (err) {
       // setError(err.message);
       console.log(err);

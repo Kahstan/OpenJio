@@ -5,132 +5,132 @@ import { Link } from "react-router-dom";
 const Profile = () => {
   const reactCtx = useContext(ReactContext);
 
-  const [profileEdit, setProfileEdit] = useState(false);
-  const [userEmailToEdit, setUserEmailToEdit] = useState("");
+  // const [profileEdit, setProfileEdit] = useState(false);
+  // const [userEmailToEdit, setUserEmailToEdit] = useState("");
 
-  const fetchProfileDelete = async (url, profileEmailToDelete) => {
-    const bod = JSON.stringify({
-      email: profileEmailToDelete,
-    });
+  // const fetchProfileDelete = async (url, profileEmailToDelete) => {
+  //   const bod = JSON.stringify({
+  //     email: profileEmailToDelete,
+  //   });
 
-    const options = {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: "Bearer " + reactCtx.access,
-      },
-      body: bod,
-    };
+  //   const options = {
+  //     method: "DELETE",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       authorization: "Bearer " + reactCtx.access,
+  //     },
+  //     body: bod,
+  //   };
 
-    try {
-      const res = await fetch(url, options);
-      console.log(res);
-      console.log(options);
+  //   try {
+  //     const res = await fetch(url, options);
+  //     console.log(res);
+  //     console.log(options);
 
-      if (res.status !== 200) {
-        throw new Error("Something went wrong.");
-      }
+  //     if (res.status !== 200) {
+  //       throw new Error("Something went wrong.");
+  //     }
 
-      const data = await res.json();
-      // setData(data);
-      console.log(data);
-      // reactCtx.setUserProfile(data)
-    } catch (err) {
-      // setError(err.message);
-      console.log(err);
-    }
-  };
+  //     const data = await res.json();
+  //     // setData(data);
+  //     console.log(data);
+  //     // reactCtx.setUserProfile(data)
+  //   } catch (err) {
+  //     // setError(err.message);
+  //     console.log(err);
+  //   }
+  // };
 
-  function handleProfileDelete(event) {
-    event.preventDefault();
-    console.log(event.target.id);
-    // if (event.target.id == reactCtx.loginEmail) reactCtx.setEmailInput(event.target.value);
-    fetchProfileDelete("http://localhost:5001/users/user", event.target.id);
-  }
+  // function handleProfileDelete(event) {
+  //   event.preventDefault();
+  //   console.log(event.target.id);
+  //   // if (event.target.id == reactCtx.loginEmail) reactCtx.setEmailInput(event.target.value);
+  //   fetchProfileDelete("http://localhost:5001/users/user", event.target.id);
+  // }
 
-  const fetchProfileUpdate = async (url) => {
-    const bod = JSON.stringify({
-      email: userEmailToEdit,
-      newEmail: reactCtx.emailInput,
-      newPassword: reactCtx.passwordInput,
-      name: reactCtx.nameInput,
-      profileType: reactCtx.profileTypeInput,
-      contact: {
-        address: reactCtx.addressInput,
-        phone: reactCtx.phoneInput,
-      },
-    });
+  // const fetchProfileUpdate = async (url) => {
+  //   const bod = JSON.stringify({
+  //     email: userEmailToEdit,
+  //     newEmail: reactCtx.emailInput,
+  //     newPassword: reactCtx.passwordInput,
+  //     name: reactCtx.nameInput,
+  //     profileType: reactCtx.profileTypeInput,
+  //     contact: {
+  //       address: reactCtx.addressInput,
+  //       phone: reactCtx.phoneInput,
+  //     },
+  //   });
 
-    const options = {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: "Bearer " + reactCtx.access,
-      },
-      body: bod,
-    };
+  //   const options = {
+  //     method: "PATCH",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       authorization: "Bearer " + reactCtx.access,
+  //     },
+  //     body: bod,
+  //   };
 
-    try {
-      const res = await fetch(url, options);
-      console.log(res);
-      console.log(options);
+  //   try {
+  //     const res = await fetch(url, options);
+  //     console.log(res);
+  //     console.log(options);
 
-      if (res.status !== 200) {
-        throw new Error("Something went wrong.");
-      }
+  //     if (res.status !== 200) {
+  //       throw new Error("Something went wrong.");
+  //     }
 
-      const data = await res.json();
-      console.log(data);
-      alert("profile updated");
-      setProfileEdit(false);
+  //     const data = await res.json();
+  //     console.log(data);
+  //     alert("profile updated");
+  //     setProfileEdit(false);
 
-      reactCtx.refreshState
-        ? reactCtx.setRefreshState(false)
-        : reactCtx.setRefreshState(true);
-    } catch (err) {
-      // setError(err.message);
-      console.log(err);
-    }
-  };
+  //     reactCtx.refreshState
+  //       ? reactCtx.setRefreshState(false)
+  //       : reactCtx.setRefreshState(true);
+  //   } catch (err) {
+  //     // setError(err.message);
+  //     console.log(err);
+  //   }
+  // };
 
-  function handleProfileEdit(event) {
-    event.preventDefault();
-    console.log(event.target.id);
-    setProfileEdit(true);
+  // function handleProfileEdit(event) {
+  //   event.preventDefault();
+  //   console.log(event.target.id);
+  //   setProfileEdit(true);
 
-    // call profile and save data into states
-    setUserEmailToEdit(reactCtx.userProfile[event.target.id].email);
-    reactCtx.setEmailInput(reactCtx.userProfile[event.target.id].email);
-    reactCtx.setNameInput(reactCtx.userProfile[event.target.id].name);
-    reactCtx.setProfileTypeInput(
-      reactCtx.userProfile[event.target.id].profileType
-    );
-    reactCtx.setAddressInput(
-      reactCtx.userProfile[event.target.id].contact.address
-    );
-    reactCtx.setPhoneInput(reactCtx.userProfile[event.target.id].contact.phone);
-  }
+  //   // call profile and save data into states
+  //   setUserEmailToEdit(reactCtx.userProfile[event.target.id].email);
+  //   reactCtx.setEmailInput(reactCtx.userProfile[event.target.id].email);
+  //   reactCtx.setNameInput(reactCtx.userProfile[event.target.id].name);
+  //   reactCtx.setProfileTypeInput(
+  //     reactCtx.userProfile[event.target.id].profileType
+  //   );
+  //   reactCtx.setAddressInput(
+  //     reactCtx.userProfile[event.target.id].contact.address
+  //   );
+  //   reactCtx.setPhoneInput(reactCtx.userProfile[event.target.id].contact.phone);
+  // }
 
-  function handleInput(event) {
-    event.preventDefault();
-    // console.log(event.target.id);
-    if (event.target.id === "email") reactCtx.setEmailInput(event.target.value);
-    if (event.target.id === "password")
-      reactCtx.setPasswordInput(event.target.value);
-    // if (event.target.id === "password1")
-    //   reactCtx.setConfirmPassword(event.target.value);
-    if (event.target.id === "name") reactCtx.setNameInput(event.target.value);
-    if (event.target.id === "profiletype")
-      reactCtx.setProfileTypeInput(event.target.value);
-    if (event.target.id === "address")
-      reactCtx.setAddressInput(event.target.value);
-    if (event.target.id === "phone") reactCtx.setPhoneInput(event.target.value);
-  }
+  // function handleInput(event) {
+  //   event.preventDefault();
+  //   // console.log(event.target.id);
+  //   if (event.target.id === "email") reactCtx.setEmailInput(event.target.value);
+  //   if (event.target.id === "password")
+  //     reactCtx.setPasswordInput(event.target.value);
+  //   // if (event.target.id === "password1")
+  //   //   reactCtx.setConfirmPassword(event.target.value);
+  //   if (event.target.id === "name") reactCtx.setNameInput(event.target.value);
+  //   if (event.target.id === "profiletype")
+  //     reactCtx.setProfileTypeInput(event.target.value);
+  //   if (event.target.id === "address")
+  //     reactCtx.setAddressInput(event.target.value);
+  //   if (event.target.id === "phone") reactCtx.setPhoneInput(event.target.value);
+  // }
 
-  function handleUpdate(event) {
-    event.preventDefault();
-    fetchProfileUpdate("http://localhost:5001/users/user");
-  }
+  // function handleUpdate(event) {
+  //   event.preventDefault();
+  //   fetchProfileUpdate("http://localhost:5001/users/user");
+  // }
 
   useEffect(() => {
     reactCtx.fetchDisplay("http://localhost:5001/users/users"); // eslint-disable-next-line
@@ -233,9 +233,7 @@ const Profile = () => {
                 className="ml-4 my-2 mx-3 pl-2 w-1/4 h-1/4 inline-block m-2 p-2 rounded-lg shadow-lg"
               >
                 <div>
-                  <p className="p-1 capitalize">
-                    Name: {reactCtx.caregiverName}
-                  </p>
+                  <p className="p-1 capitalize">Name: {data.caregiverName}</p>
                 </div>
                 <div>
                   <p id="email" className="p-1">

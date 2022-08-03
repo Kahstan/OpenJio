@@ -44,7 +44,6 @@ const Login = () => {
       reactCtx.setRefresh(refresh_token);
       reactCtx.setLoginState(true);
       reactCtx.setLoginEmail(reactCtx.emailInput);
-      console.log(reactCtx.userProfile);
       alert("Logged in");
     } catch (err) {
       // setError(err.message);
