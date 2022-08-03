@@ -41,7 +41,7 @@ const CreateProfile = () => {
 
       reactCtx.setEmailInput(data.email);
       reactCtx.setPasswordInput(data.password);
-      reactCtx.setCaregiverNameInput(data.caregiverName);
+      reactCtx.setCaregiverName(data.caregiverName);
       reactCtx.setCaregiverInterest(data.caregiverInterest);
       reactCtx.setElderlyLang(data.elderlyLang);
       reactCtx.setElderlyAge(data.elderlyAge);

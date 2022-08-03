@@ -134,11 +134,11 @@ const Profile = () => {
 
   useEffect(() => {
     reactCtx.fetchDisplay("http://localhost:5001/users/users"); // eslint-disable-next-line
-  }, [reactCtx.loginState, reactCtx.refreshState]);
+  }, [reactCtx.loginState]);
 
   return (
     <div className="App">
-      {profileEdit ? (
+      {/* {profileEdit ? (
         <div>
           <form>
             <div className="justify-center">
@@ -223,62 +223,24 @@ const Profile = () => {
         </div>
       ) : (
         <></>
-      )}
+      )} */}
       <div>
         {reactCtx.userProfile &&
           reactCtx.userProfile.map((data, index) => {
-            // need conditional rendering because initially displayAll is undefined because its empty. When we do displayAll && it will render when it returns true aka when displayAll is not empty aka not undefined, aka its populated
             return (
               <div
                 key={index}
                 className="ml-4 my-2 mx-3 pl-2 w-1/4 h-1/4 inline-block m-2 p-2 rounded-lg shadow-lg"
               >
                 <div>
-                  <p className="p-1 capitalize">Name: {data.caregiverName}</p>
+                  <p className="p-1 capitalize">
+                    Name: {reactCtx.caregiverName}
+                  </p>
                 </div>
                 <div>
                   <p id="email" className="p-1">
                     Email Address: {data.email}
                   </p>
-                </div>
-                <div>
-                  <p className="p-1 capitalize">
-                    Profile Type: {data.profileType}
-                  </p>
-                </div>
-                <div>
-                  <p className="p-1 capitalize">
-                    Address: {data.contact?.address}
-                  </p>
-                </div>
-                <div>
-                  <p className="p-1 capitalize">Phone: {data.contact?.phone}</p>
-                </div>
-                <div>
-                  <p className="p-1 capitalize">Role: {data.role}</p>
-                </div>
-                <div>
-                  <button
-                    id={data.email}
-                    onClick={handleProfileDelete}
-                    className="text-center mx-auto block w-50 m-1 px-3 text-white font-semibold button-85"
-                  >
-                    {/* Delete */}
-                    {reactCtx.loginEmail == data.email ? (
-                      <Link to="/home">Delete</Link>
-                    ) : (
-                      "Delete"
-                    )}
-                  </button>
-                </div>
-                <div>
-                  <button
-                    id={index}
-                    onClick={handleProfileEdit}
-                    className="text-center mx-auto block w-50 m-1 px-3 text-white font-semibold button-85"
-                  >
-                    Edit
-                  </button>
                 </div>
               </div>
             );

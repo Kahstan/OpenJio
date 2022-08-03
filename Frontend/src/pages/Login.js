@@ -44,7 +44,8 @@ const Login = () => {
       reactCtx.setRefresh(refresh_token);
       reactCtx.setLoginState(true);
       reactCtx.setLoginEmail(reactCtx.emailInput);
-      // alert("Logged in");
+      console.log(reactCtx.userProfile);
+      alert("Logged in");
     } catch (err) {
       // setError(err.message);
       console.log(err);
@@ -111,7 +112,7 @@ const Login = () => {
             type="submit"
             className="inline-block mx-auto mr-4 w-50 px-3 py-2 text-white font-semibold ml-4 rounded-lg shadow-md button-85"
           >
-            <Link to="/profile">Login</Link>
+            <Link to="/home">Login</Link>
           </button>
           <button className="inline-block mx-auto w-50 px-3 py-2 text-white font-semibold mr-4 rounded-lg shadow-md button-85">
             <Link to="/register">Register</Link>
