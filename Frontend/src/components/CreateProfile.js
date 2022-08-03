@@ -10,7 +10,7 @@ const CreateProfile = () => {
       email: reactCtx.emailInput,
       password: reactCtx.passwordInput,
       password1: reactCtx.passwordInput,
-      caregiverName: reactCtx.nameInput,
+      caregiverName: reactCtx.caregiverNameInput,
       caregiverInterest: reactCtx.caregiverInterest,
       elderlyLang: reactCtx.elderlyLang,
       elderlyInterest: reactCtx.elderlyInterest,
@@ -45,7 +45,7 @@ const CreateProfile = () => {
       reactCtx.setCaregiverInterest(data.caregiverInterest);
       reactCtx.setElderlyLang(data.elderlyLang);
       reactCtx.setElderlyAge(data.elderlyAge);
-      reactCtx.setUserProfile(data);
+      reactCtx.setElderlyInterest(data.elderlyInterest);
 
       alert("profile created");
     } catch (err) {
@@ -62,17 +62,16 @@ const CreateProfile = () => {
       reactCtx.setPasswordInput(event.target.value);
     // if (event.target.id === "password1")
     //   reactCtx.setConfirmPassword(event.target.value);
-    if (event.target.id === "name") reactCtx.setNameInput(event.target.value);
     if (event.target.id === "caregiverName")
-      reactCtx.setCaregiverNameInput(event.target.value);
+      reactCtx.setCaregiverName(event.target.value);
     if (event.target.id === "caregiverNameInterest")
-      reactCtx.setCaregiverNameInput(event.target.value);
+      reactCtx.setCaregiverInterest(event.target.value);
     if (event.target.id === "elderLang")
-      reactCtx.setElderLangInput(event.target.value);
+      reactCtx.setElderlyLang(event.target.value);
     if (event.target.id === "elderlyInterest")
-      reactCtx.setElderInterestInput(event.target.value);
+      reactCtx.setElderlyInterest(event.target.value);
     if (event.target.id === "elderlyAge")
-      reactCtx.setElderAgeInput(event.target.value);
+      reactCtx.setElderlyAge(event.target.value);
   }
 
   function handleRegister(event) {

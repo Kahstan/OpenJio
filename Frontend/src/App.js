@@ -29,7 +29,12 @@ function App() {
 
   const [loginState, setLoginState] = useState(false);
   const [loginEmail, setLoginEmail] = useState("");
-  const [userRole, setUserRole] = useState("guest");
+
+  const [caregiverName, setCaregiverName] = useState("");
+  const [caregiverInterest, setCaregiverInterest] = useState("");
+  const [elderlyLang, setElderlyLang] = useState("");
+  const [elderlyInterest, setElderlyInterest] = useState("");
+  const [elderlyAge, setElderlyAge] = useState("");
 
   // refresh pages
   const [refreshState, setRefreshState] = useState(false);
@@ -75,8 +80,6 @@ function App() {
     <ReactContext.Provider
       // these are not mandatory, the "parent" can choose what data the "child" can access
       value={{
-        userRole,
-        setUserRole,
         loginState,
         setLoginState,
         loginEmail,
@@ -110,6 +113,16 @@ function App() {
         refreshState,
         setRefreshState,
         fetchDisplay,
+        caregiverName,
+        setCaregiverName,
+        caregiverInterest,
+        setCaregiverInterest,
+        elderlyLang,
+        setElderlyLang,
+        elderlyInterest,
+        setElderlyInterest,
+        elderlyAge,
+        setElderlyAge,
       }}
     >
       <div className="container">
