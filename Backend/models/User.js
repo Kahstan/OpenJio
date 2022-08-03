@@ -11,34 +11,23 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    name: {
+    caregiverName: {
       type: String,
       required: true,
     },
-    profileType: {
+    caregiverInterest: {
       type: String,
       required: true,
     },
-    contact: {
-      address: {
-        type: String,
-      },
-      phone: {
-        type: Number,
-      },
-    },
-    dateCreated: {
-      type: Date,
-      required: true,
-      default: Date.now,
-    },
-    role: {
+    elderlyLang: {
       type: String,
       required: true,
-      default: "user",
     },
-    favourites: {
-      type: Array,
+    elderlyInterest: {
+      type: String,
+    },
+    elderlyAge: {
+      type: String,
     },
   },
   { collection: "users" }

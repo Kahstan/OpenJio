@@ -10,6 +10,7 @@ const { v4: uuidv4 } = require("uuid");
 const User = require("../models/User");
 const auth = require("../middleware/auth");
 
+//LOGIN
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -29,7 +30,6 @@ router.post("/login", async (req, res) => {
       id: user._id,
       email: user.email,
       name: user.name,
-      role: user.role,
     };
 
     const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
@@ -59,7 +59,6 @@ router.post("/refresh", (req, res) => {
       id: decoded.id,
       email: decoded.email,
       name: decoded.name,
-      role: decoded.role,
     };
 
     const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
@@ -79,6 +78,7 @@ router.post("/refresh", (req, res) => {
   }
 });
 
+//REGISTER
 router.put("/register", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -119,14 +119,11 @@ router.put("/register", async (req, res) => {
     const createdUser = await User.create({
       email: req.body.email,
       hash: hash,
-      name: req.body.name,
-      profileType: req.body.profileType,
-      contact: {
-        address: req.body.contact?.address,
-        phone: req.body.contact?.phone,
-      },
-      role: req.body.role,
-      favourites: [],
+      caregiverName: req.body.caregiverName,
+      caregiverInterest: req.body.caregiverInterest,
+      elderlyLang: req.body.elderlyLang,
+      elderlyInterest: req.body.elderlyInterest,
+      elderlyAge: req.body.elderlyAge,
     });
 
     console.log("created user: ", createdUser);
@@ -156,6 +153,7 @@ router.post("/user", auth, async (req, res) => {
   }
 });
 
+//UPDATE PROFILE
 router.patch("/user", auth, async (req, res) => {
   if (req.decoded.role === "admin") {
     const currentUserData = await User.findOne({ email: req.body.email });
@@ -163,16 +161,15 @@ router.patch("/user", auth, async (req, res) => {
       { email: req.body.email },
       {
         $set: {
-          email: req.body.newEmail || currentUserData.email,
-          name: req.body.name || currentUserData.name,
-          profileType: req.body.profileType || currentUserData.profileType,
-          contact: {
-            address:
-              req.body.contact?.address || currentUserData.contact.address,
-            phone: req.body.contact?.phone || currentUserData.contact.phone,
-          },
-          role: req.body.role || currentUserData.role,
-          favourites: req.body.favourites || currentUserData.favourites,
+          email: req.body.email || currentUserData.email,
+          caregiverName:
+            req.body.caregiverName || currentUserData.caregiverName,
+          caregiverInterest:
+            req.body.caregiverInterest || currentUserData.caregiverInterest,
+          elderlyLang: req.body.elderlyLang || currentUserData.elderlyLang,
+          elderlyInterest:
+            req.body.elderlyInterest || currentUserData.elderlyInterest,
+          elderlyAge: req.body.elderlyAge || currentUserData.elderlyAge,
         },
       },
       { new: true }
@@ -195,44 +192,46 @@ router.patch("/user", auth, async (req, res) => {
     }
     res.json(newUserData);
   }
-
-  if (req.decoded.role === "user") {
-    const currentUserData = await User.findOne({ email: req.decoded.email });
-    const newUserData = await User.findOneAndUpdate(
-      { email: req.decoded.email },
-      {
-        $set: {
-          email: req.body.newEmail || currentUserData.email,
-          name: req.body.name || currentUserData.name,
-          profileType: req.body.profileType || currentUserData.profileType,
-          contact: {
-            address:
-              req.body.contact?.address || currentUserData.contact.address,
-            phone: req.body.contact?.phone || currentUserData.contact.phone,
-          },
-          favourites: req.body.favourites || currentUserData.favourites,
-        },
-      },
-      { new: true }
-    );
-
-    if (req.body.newPassword) {
-      const hash = await bcrypt.hash(req.body.newPassword, 12); // 12-25 is how many times you are salting it
-      const newUserData2 = await User.findOneAndUpdate(
-        { email: req.decoded.email },
-        {
-          $set: {
-            hash: hash || currentUserData.hash,
-          },
-        },
-        { new: true }
-      );
-      return res.json(newUserData2);
-    }
-    res.json(newUserData);
-  }
 });
 
+//   if (req.decoded.role === "user") {
+//     const currentUserData = await User.findOne({ email: req.decoded.email });
+//     const newUserData = await User.findOneAndUpdate(
+//       { email: req.decoded.email },
+//       {
+//         $set: {
+//           email: req.body.newEmail || currentUserData.email,
+//           name: req.body.name || currentUserData.name,
+//           profileType: req.body.profileType || currentUserData.profileType,
+//           contact: {
+//             address:
+//               req.body.contact?.address || currentUserData.contact.address,
+//             phone: req.body.contact?.phone || currentUserData.contact.phone,
+//           },
+//           favourites: req.body.favourites || currentUserData.favourites,
+//         },
+//       },
+//       { new: true }
+//     );
+
+//     if (req.body.newPassword) {
+//       const hash = await bcrypt.hash(req.body.newPassword, 12); // 12-25 is how many times you are salting it
+//       const newUserData2 = await User.findOneAndUpdate(
+//         { email: req.decoded.email },
+//         {
+//           $set: {
+//             hash: hash || currentUserData.hash,
+//           },
+//         },
+//         { new: true }
+//       );
+//       return res.json(newUserData2);
+//     }
+//     res.json(newUserData);
+//   }
+// });
+
+//DELETE PROFILE
 router.delete("/user", auth, async (req, res) => {
   if (req.decoded.role === "admin") {
     const user = await User.deleteOne({ email: req.body.email });
@@ -245,24 +244,24 @@ router.delete("/user", auth, async (req, res) => {
   }
 });
 
-router.post("/favourites", auth, async (req, res) => {
-  // const currentUserData = await User.findOne({ email: req.decoded.email });
-  const UserDataFavouritesUpdated = await User.findOneAndUpdate(
-    { email: req.decoded.email },
-    { $push: { favourites: req.body.favouriteAdd } },
-    { new: true }
-  );
-  res.json(UserDataFavouritesUpdated);
-});
+// router.post("/favourites", auth, async (req, res) => {
+//   // const currentUserData = await User.findOne({ email: req.decoded.email });
+//   const UserDataFavouritesUpdated = await User.findOneAndUpdate(
+//     { email: req.decoded.email },
+//     { $push: { favourites: req.body.favouriteAdd } },
+//     { new: true }
+//   );
+//   res.json(UserDataFavouritesUpdated);
+// });
 
-router.delete("/favourites", auth, async (req, res) => {
-  // const currentUserData = await User.findOne({ email: req.decoded.email });
-  const UserDataFavouritesUpdated = await User.findOneAndUpdate(
-    { email: req.decoded.email },
-    { $pull: { favourites: req.body.favouriteDel } },
-    { new: true }
-  );
-  res.json(UserDataFavouritesUpdated);
-});
+// router.delete("/favourites", auth, async (req, res) => {
+//   // const currentUserData = await User.findOne({ email: req.decoded.email });
+//   const UserDataFavouritesUpdated = await User.findOneAndUpdate(
+//     { email: req.decoded.email },
+//     { $pull: { favourites: req.body.favouriteDel } },
+//     { new: true }
+//   );
+//   res.json(UserDataFavouritesUpdated);
+// });
 
 module.exports = router;

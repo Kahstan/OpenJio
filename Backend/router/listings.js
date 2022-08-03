@@ -35,36 +35,19 @@ const fileFilter = (req, file, cb) => {
 
 let upload = multer({ storage, fileFilter });
 
-// CREATE LISTING
+// CREATE EVENT
 router.put("/create", upload.single("image"), auth, async (req, res) => {
   try {
     const createdListing = await Listing.create({
-      title: req.body.title,
-      image: req.file?.filename,
-      petName: req.body.petName,
-      species: req.body.species,
-      breed: req.body.breed,
-      sex: req.body.sex,
-      size: req.body.size,
-      age: req.body.age,
-      medical: req.body.medical,
-      isArchive: req.body.isArchive,
-      favouritesCount: req.body.favouritesCount,
-      ownerContactName: req.body.ownerContactName,
-      ownerContactEmail: req.body.ownerContactEmail,
-      ownerContactPhone: req.body.ownerContactPhone,
-      ownerContactAddress: req.body.ownerContactAddress,
-      profileContact: {
-        // here links with payload from users /login
-        id: req.decoded.id,
-        name: req.decoded.name,
-        email: req.decoded.email,
-      },
-      comments: req.body.comments,
-      dateCreated: req.body.dateCreated,
+      name: req.body.name,
+      location: req.body.location,
+      date: req.body.date,
+      time: req.body.time,
+      tags: req.body.tags,
+      language: req.body.language,
     });
 
-    console.log("created listing:  ", createdListing);
+    console.log("created activity:  ", createdListing);
     res.json({ status: "ok", message: "listing created" });
   } catch (error) {
     console.log("PUT /create", error); // on server
@@ -75,10 +58,10 @@ router.put("/create", upload.single("image"), auth, async (req, res) => {
   }
 });
 
-// DISPLAY ALL LISTINGS
+// DISPLAY ALL ACTIVITIES
 router.get("/displayAll", async (req, res) => {
   try {
-    const allListings = await Listing.find().select(selectParams); // this filters what information we want to send to the front-end (sensitive) **
+    const allListings = await Listing.find(); // this filters what information we want to send to the front-end (sensitive) **
     res.json(allListings);
   } catch (error) {
     console.log(`GET /displayAll ${error}`);
@@ -89,98 +72,81 @@ router.get("/displayAll", async (req, res) => {
 });
 
 // DISPLAY 1 LISTING via ID --> back-end
-router.post("/listing", async (req, res) => {
-  try {
-    const searchListing = await Listing.find(
-      { _id: req.body.id }.select(selectParams)
-    ); // come back to set up more search params
-    res.json(searchListing);
-  } catch (error) {
-    console.log(`POST /listing ${error}`);
-    res
-      .status(400)
-      .json({ status: "error", message: "failed: no such listing found" });
-  }
-});
+// router.post("/listing", async (req, res) => {
+//   try {
+//     const searchListing = await Listing.find(
+//       { _id: req.body.id }.select(selectParams)
+//     ); // come back to set up more search params
+//     res.json(searchListing);
+//   } catch (error) {
+//     console.log(`POST /listing ${error}`);
+//     res
+//       .status(400)
+//       .json({ status: "error", message: "failed: no such listing found" });
+//   }
+// });
 
 /////////////////////////////////////////////////////
 // SEARCH BAR : generic search filters --> front end        [[ NOT DONE ]]
 /////////////////////////////////////////////////////
 
-// UPDATE LISTING
+// UPDATE ACTIVITY
 router.patch("/edit", auth, async (req, res) => {
   // update ANY listing as admin
-  if (req.decoded.role === "admin") {
-    const anyListingData = await Listing.findOne({ _id: req.body.id });
-    const newListingData = await Listing.findOneAndUpdate(
-      { _id: req.body.id },
-      {
-        $set: {
-          title: req.body.title || anyListingData.title, // req.body.newtitle
-          image: req.body.image || anyListingData.image,
-          petName: req.body.petName || anyListingData.petName,
-          species: req.body.species || anyListingData.species,
-          breed: req.body.breed || anyListingData.breed,
-          sex: req.body.sex || anyListingData.sex,
-          size: req.body.size || anyListingData.size,
-          age: req.body.age || anyListingData.age,
-          medical: req.body.medical || anyListingData.medical,
-          isArchive: req.body.isArchive || anyListingData.isArchive,
-          favouritesCount:
-            req.body.favouritesCount || anyListingData.favouritesCount,
-          ownerContactName:
-            req.body.ownerContactName || anyListingData.ownerContactName,
-          ownerContactEmail:
-            req.body.ownerContactEmail || anyListingData.ownerContactEmail,
-          ownerContactPhone:
-            req.body.ownerContactPhone || anyListingData.ownerContactPhone,
-          ownerContactAddress:
-            req.body.ownerContactAddress || anyListingData.ownerContactAddress,
-          comments: req.body.comments || anyListingData.comments,
-        },
+  const anyListingData = await Listing.findOne({ _id: req.body.id });
+  const newListingData = await Listing.findOneAndUpdate(
+    { _id: req.body.id },
+    {
+      $set: {
+      name: req.body.name || anyListingData.name,
+      location: req.body.location || anyListingData.location,
+      date: req.body.date || anyListingData.date,
+      time: req.body.time || anyListingData.time,
+      tags: req.body.tags || anyListingData.tags,
+      language: req.body.language || anyListingData.language,
       },
-      { new: true }
-    );
-    res.json(newListingData);
-  }
+    },
+    { new: true }
+  );
+  res.json(newListingData);
 
   // update own post as user
-  if (req.decoded.role === "user") {
-    const ownListingData = await Listing.findOne({ _id: req.body.id });
-    if (req.decoded.id === ownListingData.profileContact.id) {
-      const newListingData = await Listing.findOneAndUpdate(
-        { _id: req.body.id },
-        {
-          $set: {
-            title: req.body.title || ownListingData.title, // req.body.newtitle
-            image: req.body.image || ownListingData.image,
-            petName: req.body.petName || ownListingData.petName,
-            species: req.body.species || ownListingData.species,
-            breed: req.body.breed || ownListingData.breed,
-            sex: req.body.sex || ownListingData.sex,
-            size: req.body.size || ownListingData.size,
-            age: req.body.age || ownListingData.age,
-            medical: req.body.medical || ownListingData.medical,
-            isArchive: req.body.isArchive || ownListingData.isArchive,
-            favouritesCount:
-              req.body.favouritesCount || ownListingData.favouritesCount,
-            ownerContactName:
-              req.body.ownerContactName || ownListingData.ownerContactName,
-            ownerContactEmail:
-              req.body.ownerContactEmail || ownListingData.ownerContactEmail,
-            ownerContactPhone:
-              req.body.ownerContactPhone || ownListingData.ownerContactPhone,
-            ownerContactAddress:
-              req.body.ownerContactAddress ||
-              ownListingData.ownerContactAddress,
-            comments: req.body.comments || ownListingData.comments,
-          },
-        },
-        { new: true }
-      );
-      res.json(newListingData);
-    }
-  }
+  // if (req.decoded.role === "user") {
+  //   const ownListingData = await Listing.findOne({ _id: req.body.id });
+  //   if (req.decoded.id === ownListingData.profileContact.id) {
+  //     const newListingData = await Listing.findOneAndUpdate(
+  //       { _id: req.body.id },
+  //       {
+  //         $set: {
+  //           title: req.body.title || ownListingData.title, // req.body.newtitle
+  //           image: req.body.image || ownListingData.image,
+  //           petName: req.body.petName || ownListingData.petName,
+  //           species: req.body.species || ownListingData.species,
+  //           breed: req.body.breed || ownListingData.breed,
+  //           sex: req.body.sex || ownListingData.sex,
+  //           size: req.body.size || ownListingData.size,
+  //           age: req.body.age || ownListingData.age,
+  //           medical: req.body.medical || ownListingData.medical,
+  //           isArchive: req.body.isArchive || ownListingData.isArchive,
+  //           favouritesCount:
+  //             req.body.favouritesCount || ownListingData.favouritesCount,
+  //           ownerContactName:
+  //             req.body.ownerContactName || ownListingData.ownerContactName,
+  //           ownerContactEmail:
+  //             req.body.ownerContactEmail || ownListingData.ownerContactEmail,
+  //           ownerContactPhone:
+  //             req.body.ownerContactPhone || ownListingData.ownerContactPhone,
+  //           ownerContactAddress:
+  //             req.body.ownerContactAddress ||
+  //             ownListingData.ownerContactAddress,
+  //           comments: req.body.comments || ownListingData.comments,
+  //         },
+  //       },
+  //       { new: true }
+  //     );
+  //     res.json(newListingData);
+  //   }
+  // }
 });
 
 // UPDATE LISTING FAVOURITE COUNT

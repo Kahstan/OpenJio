@@ -1,90 +1,35 @@
 const mongoose = require("mongoose");
 
-const ListingSchema = new mongoose.Schema(
+const ActivitySchema = new mongoose.Schema(
   {
-    title: {
+    name: {
       type: String,
-    },
-    image: {
-      // data: Buffer, // how to store our images **
-      type: String,
-      // required: true,
-      // unique: true,
-    },
-    petName: {
-      type: String,
-      // required: true,
-    },
-    species: {
-      type: String,
-      // required: true,
-    },
-    breed: {
-      type: String,
-      // required: true,
-    },
-    sex: {
-      type: String,
-      // required: true,
-    },
-    size: {
-      type: String,
-      // required: true,
-    },
-    age: {
-      type: String,
-    },
-    medical: {
-      type: String,
-    },
-    isArchive: {
-      type: Boolean,
       required: true,
-      default: false,
     },
-    favouritesCount: {
-      type: Number,
+    location: {
+      type: String,
       required: true,
-      default: 0,
     },
-    ownerContactName: {
-      type: String,
-    },
-    ownerContactEmail: {
-      type: String,
-    },
-    ownerContactPhone: {
-      type: Number,
-    },
-    ownerContactAddress: {
-      type: String,
-    },
-    profileContact: {
-      id: {
-        type: String,
-        required: true,
-      },
-      name: {
-        type: String,
-        required: true,
-      },
-      email: {
-        type: String,
-        required: true,
-      },
-    },
-    comments: {
-      type: String,
-    },
-    dateCreated: {
+    date: {
       type: Date,
       required: true,
-      default: Date.now,
+    },
+    time: {
+      type: String,
+      required: true,
+    },
+    tags: {
+      type: String,
+      // required: true,
+    },
+    language: {
+      type: String,
+      required: true,
     },
   },
-  { collection: "listings" }
+  { collection: "activity" }
 );
 
-const Listing = mongoose.model("Listing", ListingSchema);
+const Activity = mongoose.model("Activity", ActivitySchema);
 
-module.exports = Listing;
+module.exports = Activity;
